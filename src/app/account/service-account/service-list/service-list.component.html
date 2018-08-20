@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          Servicios
+        </h5>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<table class="table table-sm table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>Cod.</th>
+      <th>Servicio</th>
+      <th>Descripción</th>
+      <th>Valoral Cliente</th>
+      <th>Costo</th>
+      <th>Impuesto %</th>
+      <th>Activo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of services">
+      <td>
+        <input type="text" class="form-control form-control-sm" [ngModel]="i.code" [disabled]="!i.seeEdit">
+      </td>
+      <td>
+        <input type="text" class="form-control form-control-sm" [ngModel]="i.name" [disabled]="!i.seeEdit">
+      </td>
+      <td>
+        <input type="text" class="form-control form-control-sm" [ngModel]="i.description" [disabled]="!i.seeEdit">
+      </td>
+      <td>
+        <input type="text" class="form-control form-control-sm" [ngModel]="i.value" [disabled]="!i.seeEdit">
+      </td>
+      <td>
+        <input type="text" class="form-control form-control-sm" [ngModel]="i.cost" [disabled]="!i.seeEdit">
+      </td>
+      <td>
+        <input type="text" class="form-control form-control-sm" [ngModel]="i.tax" [disabled]="!i.seeEdit">
+      </td>
+      <td class="text-center">
+        <span class="text-success" *ngIf="i.active">
+          <i class="fas fa-circle"></i>
+        </span>
+        <span class="text-danger" *ngIf="!i.active">
+          <i class="fas fa-circle"></i>
+        </span>
+        
+      </td>
+      <td>
+        <button class="btn btn-info btn-sm" (click)="activeService(i)" *ngIf="i.seeEdit">
+          <i class="fas fa-save"></i>
+        </button>
+        <button class="btn btn-primary btn-sm" (click)="i.seeEdit=!i.seeEdit" *ngIf="!i.seeEdit">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button [ngClass]="{'btn':true, 'btn-secondary':!i.active, 'btn-success':i.active, 'btn-sm':true}" (click)="i.active=!i.active; activeService(i)">
+          <i [ngClass]="{'fas':true, 'fa-toggle-on':i.active, 'fa-toggle-off':!i.active }"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ngb-pagination [collectionSize]="70" [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+
+<!-- <pre>
+  {{services|json}}
+</pre>
+***********************+
+<pre>
+  {{user|json}}
+</pre> -->

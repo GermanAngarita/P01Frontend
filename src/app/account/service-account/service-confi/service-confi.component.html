@@ -1,0 +1,109 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Servicios
+      <button class="btn btn-primary btn-sm float-right" (click)="saveService()"> Guardar Servicio</button>
+    </h5>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Nombre</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="newService.name">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Código</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="newService.code">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Valor Comercial</label>
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="newService.value">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Impuesto</label>
+          <input type="number" class="form-control form-control-sm" [(ngModel)]="newService.tax">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <textarea class="form-control form-control-sm" [(ngModel)]="newService.description" cols="30" rows="10"></textarea>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Tipos</label>
+          <select name="" id="" class="form-control-sm form-control" [(ngModel)]="newService.type">
+            <option value="Automovil">Automovil</option>
+            <option value="Campero">Campero</option>
+            <option value="Camioneta">Camioneta</option>
+            <option value="Camión">Camión</option>
+            <option value="Etc">Etc</option>
+          </select>
+        </div>
+        <div class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let i of newService.supplys">
+            <span class="text-uppercase">Cant. {{i.quantity}} <strong>{{i.supply}}</strong></span>
+            <button class="btn-sm btn btn-primary" (click)="deletSupply(i)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </li>
+        </div>
+      </div>
+    </div>
+    <h5 class="card-title">
+      Insumos: Costo del Servicio:  {{newService.cost|currency:'$ '}}
+    </h5>
+  </div>
+</div>
+<br>
+<div class="row">
+    <div class="col">
+      <table class="table table-bordered table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th>Insumo</th>
+            <th>Descripción</th>
+            <th>Referencia</th>
+            <th>Unidad</th>
+            <th>Costo</th>
+            <th>Cantidad</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of supplys">
+            <td width="18%">{{i.supply}}</td>
+            <td class="text-small">{{i.description}}</td>
+            <td>{{i.reference}}</td>
+            <td class="text-center">{{i.unity}}</td>
+            <td  width="10%">{{i.cost|currency:'$ '}}</td>
+            <td width="10%">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn-secondary btn btn-sm" (click)="i.quantity = i.quantity - 1 " > - </button>
+                </div>
+                <input type="number" class="form-control-sm form-custom-unitys" min=0.0 [(ngModel)]="i.quantity" >
+                <div class="input-group-append">
+                    <button class="btn-secondary btn btn-sm" (click)="i.quantity = i.quantity + 1 "> + </button>
+                </div>
+              </div>
+                    
+                    
+                    
+            </td>
+            <td>
+              <button class="btn-primary btn btn-sm" (click)="addSupply(i)">
+                <i class="fas fa-plus"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

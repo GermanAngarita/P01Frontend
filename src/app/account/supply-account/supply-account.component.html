@@ -1,0 +1,135 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!-- Espacio para el menu -->
+      <div class="card">
+        <div class="card-body text-center">
+          <i class="fas fa-user fa-3x"></i>
+          <br>
+          <span class="text-uppercase text-small">
+            {{user.name +' '+ user.last_name}}
+          </span>
+        </div>
+      </div>
+      <br>
+      <div class="list-group">
+        
+        <a  class="list-group-item list-group-item-action active" routerLinkActive="active" routerLink="centerList" >
+          <i class="fas fa-building"></i> Insumos Referencias
+        </a>
+      </div>
+  
+    </div>
+    <div class="col-md-10">
+      <!-- <router-outlet></router-outlet> -->
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            Referencias
+          </h5>
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control-sm form-control" [(ngModel)]="newSupply.supply">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="">Descripción</label>
+                <input type="text" class="form-control-sm form-control" [(ngModel)]="newSupply.description">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="">Referencia</label>
+                <input type="text" class="form-control-sm form-control" [(ngModel)]="newSupply.reference">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="">Unidad</label>
+                <select name="" id="" class="form-control-sm form-control" [(ngModel)]="newSupply.unity">
+                  <option value="und">[und] Unidades</option>
+                  <option value="kg">[kg] Kilogramos</option>
+                  <option value="m">[m] Metro</option>
+                  <option value="m2">[m2] Metro Cuadrado</option>
+                  <option value="l">[l] Litro</option>
+                  <option value="gl">[gl] Galón</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label for="">Costo {{newSupply.cost|currency:'$ '}} </label>
+                <input type="number" class="form-control-sm form-control" [(ngModel)]="newSupply.cost">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+                <button class="btn btn-primary btn-sm" (click)="createSupply()">Guardar</button>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+          </div> <br>
+          <p class="card-text">
+            <strong>Información: </strong> <br>
+            Una referencia es un insumo de los servicios comercializados. Al crear sus servicios podrá inidicar que insumos y en que medida se requieren para prestar dicho servicio, esto le ayudará a controlar el costo de prestar cada servicio.
+          </p>
+        </div>
+      </div>
+
+      <br>
+
+      <table class="table table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Referencia</th>
+            <th>Unidad</th>
+            <th>Costo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of supplys">
+            <td>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="i.supply" [disabled]="!i.edit">
+            </td>
+            <td>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="i.description" [disabled]="!i.edit">
+            </td>
+            <td>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="i.reference" [disabled]="!i.edit">
+            </td>
+            <td>
+              <select type="text" class="form-control form-control-sm" [(ngModel)]="i.unity" [disabled]="!i.edit">
+                <option value="und">[und] Unidades</option>
+                <option value="kg">[kg] Kilogramos</option>
+                <option value="m">[m] Metro</option>
+                <option value="m2">[m2] Metro Cuadrado</option>
+                <option value="l">[l] Litro</option>
+                <option value="gl">[gl] Galón</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="i.cost" [disabled]="!i.edit">
+            </td>
+            <td>
+              <button class="btn-primary btn btn-sm" (click)="i.edit=!i.edit" *ngIf="!i.edit">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-success btn-sm" *ngIf="i.edit" (click)="updateSupply(i)">
+                <i class="fas fa-save"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
