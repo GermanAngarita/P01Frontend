@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col">
+    <div class="form-group">
+      <input type="text" class="form-control form-control-sm" [(ngModel)]="filter.nit" (change)="getAccount()" >
+    </div>
+  </div>
+</div>
+<table class="table table-sm table-striped text-small">
+  <thead class="thead-dark">
+    <tr>
+      <th>Cod</th>
+      <th>Nombre</th>
+      <th>Abreviado</th>
+      <th>NIT</th>
+      <th>Email</th>
+      <th>Teléfono</th>
+      <th>Dirección</th>
+      <th>Ciudad</th>
+      <th>Activo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of accounts">
+      <td>{{i.code}}</td>
+      <td>{{i.name}}</td>
+      <td> {{i.av}} </td>
+      <td> {{i.nit}} </td>
+      <td> {{i.email}} </td>
+      <td> {{i.telephone}} </td>
+      <td> {{i.address}} </td>
+      <td> {{i.city + ' '+ i.country}} </td>
+      <td>
+        <i [ngClass]="{'fa':true, 'fa-toggle-on':i.active, 'fa-toggle-off':!i.active}"></i>
+      </td>
+      <td>
+        <button class="btn btn-primary btn-sm " (click)="info(i)" >info</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+  
+  <pre>
+    {{accounts|json}}
+  </pre>

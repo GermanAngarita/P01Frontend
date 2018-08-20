@@ -1,0 +1,66 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" >KASC
+  </a>
+  <button class="btn btn-outline-light navbar-btn" (click)="goTo('dashboard/menu')" >
+     Menu <i class="fas fa-list-ul"></i>
+  </button>
+  <span class="navbar-text">
+    &nbsp; <span class="text-uppercase"> {{user.group}} </span> 
+    <span class="text-uppercase">
+        {{user.name+' '+user.last_name}}
+    </span>
+  </span>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+    </ul>
+    
+  </div>
+  <div ngbDropdown placement="bottom-right" class="d-inline-block">
+    <button class="navbar-btn btn btn-outline-secondary text-capitalize" id="btn-menu" ngbDropdownToggle>
+      <i class="fas fa-cog"></i>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="btn-menu">
+      <a class="dropdown-item cursor-pointer" (click)="changePassworOn()">
+        <i class="fas fa-key"></i> Cambiar Contraseña
+      </a>
+      <li class="dropdown-divider"></li>
+      <a class="dropdown-item cursor-pointer" (click)="signOut()">
+        <i class="fas fa-power-off"></i> Cerrar sesión
+      </a>
+    </div>
+  </div>
+  
+</nav> <br>
+<router-outlet></router-outlet>
+
+
+<ng-template #chagePassTemplate let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      Cambiar Contraseña
+    </h4>
+    <button type="button" class="close" aria-label="close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="">Contraseña nueva</label>
+      <input type="password" class="form-control" [(ngModel)]="pass.newPassword" >
+    </div>
+    <div class="form-group">
+      <label for="">confirmar contraseña</label>
+      <input type="password" class="form-control" [(ngModel)]="pass.confirmPassword" >
+    </div>
+    <div *ngIf="alert.msg">
+        <ngb-alert [type]="alert.type" (close)="closeAlert()" >
+          {{alert.msg}}
+        </ngb-alert>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-light" (click)="c('Close click')">Cancelar</button>
+    <button class="btn btn-primary" (click)="change()">Guardar cambios</button>
+  </div>
+</ng-template>

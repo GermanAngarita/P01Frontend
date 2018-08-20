@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!-- Espacio para el menu -->
+      <div class="card">
+        <div class="card-body text-center">
+          <i class="fas fa-user fa-3x"></i>
+          <br>
+          <span class="text-uppercase text-small">
+            {{user.name +' '+ user.last_name}}
+          </span>
+        </div>
+      </div>
+      <br>
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action text-small" routerLinkActive="active" routerLink="plans" >
+          <i class="fas fa-list-ul"></i> Plans
+        </a>
+        
+      </div>
+  
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

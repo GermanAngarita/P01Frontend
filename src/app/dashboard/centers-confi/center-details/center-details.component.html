@@ -1,0 +1,52 @@
+<div class="card bg-light">
+  <div class="card-body">
+    <p>
+        <strong>INFORMACIÓN DEL CENTRO DE SERVICIO</strong>
+        <span class="float-right"><strong>Creado desde:</strong> {{center.created|date:'dd MMMM yyyy'}} </span>
+    </p>
+    <h5 class="card-title"> {{center.name}} </h5>
+    <div class="row">
+      <dt class="col-sm-3">
+        Nombre
+      </dt>
+      <dd class="col-sm-9">
+        {{center.name}}
+      </dd>
+      <dt class="col-sm-3">
+        Código
+      </dt>
+      <dd class="col-sm-9">
+        {{center.code}}
+      </dd>
+      <dt class="col-sm-3">
+        Zona
+      </dt>
+      <dd class="col-sm-9">
+        {{center.zone}}
+      </dd>
+      <dt class="col-sm-3">
+          Dirección
+        </dt>
+        <dd class="col-sm-9">
+          {{center.address}}
+        </dd>
+        <dt class="col-sm-3">
+          Ciudad
+        </dt>
+        <dd class="col-sm-9">
+          {{center.city}}
+        </dd>
+        <dt class="col-sm-3">
+            Activo
+          </dt>
+          <dd class="col-sm-9">
+            <span [ngClass]="{'badge':true, 'badge-success':center.active, 'badge-secondary':!center.active }">
+              <span *ngIf="center.active">Activo</span>
+              <span *ngIf="!center.active">Cerrado</span>
+            </span>
+          </dd>
+    </div>
+  </div>
+</div>
+<br>
+

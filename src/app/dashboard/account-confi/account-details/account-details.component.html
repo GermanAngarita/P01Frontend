@@ -1,0 +1,536 @@
+<h4 class="display-4">{{account.name}}</h4>
+<hr>
+<!-- Información básica -->
+<div class="card bg-light">
+  <div class="card-body">
+    <h5 class="card-title">
+      Datos de la cuenta
+      <span class="float-right">
+        <button class="btn btn-sm btn-outline-secondary" (click)="seeEditAccount = !seeEditAccount" *ngIf="!seeEditAccount && !seeMore" >Editar Datos de la cuenta</button>
+      <button class="btn btn-sm btn-outline-primary" (click)="seeMore=!seeMore" >Mas Información</button>
+      </span>
+      
+    </h5>
+    <div class="row" *ngIf="!seeMore">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Nombre de la cuenta</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="!seeEditAccount" [(ngModel)]="account.name" (change)="getAv (account.name, account.city)">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Código</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="account.code" disabled>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Abreviatura</label>
+          <input type="text" class="form-control form-control-sm" [(ngModel)]="account.av" [disabled]="!seeEditAccount">
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!seeMore">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Email</label>
+          <input type="email" class="form-control form-control-sm" [disabled]="!seeEditAccount" [(ngModel)]="account.email" >
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">NIT - Cédula</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="!seeEditAccount" [(ngModel)]="account.nit" >
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Teléfono</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="!seeEditAccount" [(ngModel)]="account.telephone" >
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="!seeMore">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Dirección</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="!seeEditAccount" [(ngModel)]="account.address">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Ciudad</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="!seeEditAccount" [(ngModel)]="account.city" (change)="getAv (account.name, account.city)">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">País</label>
+          <input type="text" class="form-control form-control-sm" [disabled]="!seeEditAccount" [(ngModel)]="account.country">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-sm btn-outline-secondary" (click)="seeEditAccount = !seeEditAccount" *ngIf="seeEditAccount" >Cancelar</button>
+        <button class="btn btn-sm btn-primary" (click)="editAccount(account)" *ngIf="seeEditAccount" >Guardar Datos</button>
+      </div>
+    </div>
+    <p class="card-text text-help text-justify text-small" *ngIf="!seeMore">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa eos officia eius magnam rerum dolore quam quas rem necessitatibus soluta dolorem perspiciatis ullam omnis eveniet iure minus exercitationem, temporibus iste. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora veritatis omnis maxime ad, sit magnam ullam soluta voluptatum vel illum nihil odio aspernatur quasi sequi mollitia, voluptate placeat incidunt dignissimos!
+    </p>
+
+    
+
+
+    
+
+    
+  </div>
+</div>
+<!-- Fin información básica -->
+<br>
+<!-- Facturación -->
+<div class="card bg-light">
+  <div class="card-body">
+    <h5 class="card-title" >
+      Facturación
+      <span class="float-right">
+        
+        <button class="btn btn-sm btn-outline-secondary" *ngIf="!seeMoreBilling" (click)="seeEditPlan=!seeEditPlan" >Editar el Plan</button>
+        <button class="btn btn-sm btn-outline-primary " (click)="seeMoreBilling=!seeMoreBilling">
+            Más Información
+        </button>
+      </span>
+    </h5>
+    <p *ngIf="!seeEditPlan" >Para cambiar el plan por favor seleccione uno de la lista desplegable y luego guarde los cambios</p>
+    <div class="row" *ngIf="!seeEditPlan">
+      <div class="col">
+        <div class="form-group">
+          <select name="" id="" class="form-control-sm form-control" [(ngModel)]="planSelect" >
+            <option value="">Seleccione un Plan</option>
+            <option value="{{i._id}}" *ngFor="let i of plans">{{i.plan}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <button class="btn-primary btn btn-sm" (click)="editPlan()">
+          <i class="fas fa-save"></i> Actualizar Plan
+        </button>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    <div class="row" *ngIf="!seeMoreBilling">
+      <div class="col">
+        <div>
+          <div>
+            <h5 class="">
+                <strong>{{plan.plan}}</strong> <span></span>
+            </h5>
+            <p class="text-muted">{{plan.description}}</p>
+            <!-- <p class="text-left" >
+              <strong>Valor a Pagar {{i.total|currency:'$ '}}</strong>
+            </p> -->
+            <table class="table table-sm table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Valor Mes</th>
+                  <th>Frecuencia de Pago</th>
+                  <th>Descuento</th>
+                  <th>Valor a Pagar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> {{plan.value|currency:'$ '}} </td>
+                  <td> {{plan.frequency/30}} Mes(es) </td>
+                  <td> {{plan.off/100|percent}} </td>
+                  <td> {{plan.total|currency:'$ '}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin de Facturación -->
+<br>
+<!-- Conctactos -->
+<div class="card bg-light" >
+  <div class="card-body">
+    <h5 class="card-title" >
+      Contactos
+      <span class="float-right">
+        <button class="btn btn-outline-secondary btn-sm" *ngIf="!seeMoreContact" (click)="seeFormContact=!seeFormContact" > Agregar Contactos</button>
+        <button class="btn btn-outline-primary btn-sm" (click)="seeMoreContact=!seeMoreContact" >Más Información</button>
+      </span>
+    </h5>
+
+    <div class="row" *ngIf="!seeFormContact">
+        <div class="col">
+          <div class="form-group">
+            <label for="">Nombres</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="contact.name">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="">Cargo</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="contact.position">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="">Email</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="contact.email">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="">Teléfono</label>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="contact.telephone">
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group">
+            <label for="">Agregar contacto</label> <br>
+            <button class="btn btn-primary btn-sm" (click)="addContact()" >Agregar contacto</button>
+          </div>
+        </div>
+      </div>
+
+
+
+    <table class="table table-striped table-sm table-bordered" *ngIf="!seeMoreContact">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>cargo</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of account?.contacts; let i = index">
+          <td>{{i.name}}</td>
+          <td>{{i.position}}</td>
+          <td>{{i.email}}</td>
+          <td>{{i.telephone}}</td>
+          <td>
+            <button class="btn btn-danger btn-sm" (click)="deletContact(i)" placement="top" ngbTooltip="Borrar Contacto">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Fin Contactos -->
+
+<br>
+<!-- Centros de servicio -->
+<div class="card bg-light">
+  <div class="card-body">
+    <h5 class="card-title">
+      Centros de Servicio
+      <span class="float-right">
+        <button type="button" class="btn btn-sm btn-outline-dark " (click)="viewCenterForm =!viewCenterForm" *ngIf="!seeMoreCenter" >Nuevo Centro de Servicio</button>
+        <button class="btn btn-outline-primary btn-sm" (click)="seeMoreCenter=!seeMoreCenter" >Más Información</button>
+      </span>
+      
+    </h5>
+    <div class="row" *ngIf="viewCenterForm">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Nombre</label>
+          <input type="text" class="form-control-sm form-control" [(ngModel)]="newCenter.name" >
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Codigo</label>
+          <input type="text" class="form-control-sm form-control" [(ngModel)]="newCenter.code" disabled>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Zona</label>
+          <select class="form-control-sm form-control" [(ngModel)]="newCenter.zone">
+            <option value="">Elija Zona</option>
+            <option value="Z1">Zona 1</option>
+            <option value="Z2">Zona 2</option>
+            <option value="Z3">Zona 3</option>
+            <option value="Z4">Zona 4</option>
+            <option value="Z5">Zona 5</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="viewCenterForm">
+      <div class="col">
+        <div class="form-group">
+          <label for="">City</label>
+          <input type="text" class="form-control-sm form-control" [(ngModel)]="newCenter.city">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Dirección</label>
+          <input type="text" class="form-control-sm form-control" [(ngModel)]="newCenter.address">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Guardar</label><br>
+          <button class="btn btn-primary btn-sm" (click)="createCenter()">Guardar nuevo centro</button>
+        </div>
+      </div>
+    </div>
+    <br *ngIf="viewCenterForm">
+    <table class="table table-sm " *ngIf="!seeMoreCenter">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Codigo</th>
+          <th>Zona</th>
+          <th>Ciudad</th>
+          <th>Dirección</th>
+          <th>Creado</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of centers">
+          <td class="text-uppercase">
+            <input type="text" class="form-control-sm form-control" [(ngModel)]="i.name" [disabled]="!i.edit">
+          </td>
+          <td> {{i.code}} </td>
+          <td>
+              <select class="form-control-sm form-control" [(ngModel)]="i.zone" [disabled]="!i.edit">
+                  <option value="Z1">Zona 1</option>
+                  <option value="Z2">Zona 2</option>
+                  <option value="Z3">Zona 3</option>
+                  <option value="Z4">Zona 4</option>
+                  <option value="Z5">Zona 5</option>
+                </select>
+          </td>
+          <td>
+            <input type="text" class="form-control-sm form-control" [(ngModel)]="i.city" [disabled]="!i.edit" >
+          </td>
+          <td>
+              <input type="text" class="form-control-sm form-control" [(ngModel)]="i.address" [disabled]="!i.edit" >
+          </td>
+          <td> {{i.created | date:'dd-MM-yyyy'}} </td>
+          <td *ngIf="!i.edit"> 
+            <i [ngClass]="{'fas':true, 'fa-power-off':true, 'text-success':i.active, 'text-danger':!i.active}"></i>
+            <span *ngIf="i.active"> Activo</span>
+            <span *ngIf="!i.active"> Cerrado</span>
+          </td>
+          <td *ngIf="i.edit">
+            <select class="form-control form-control-sm" [(ngModel)]="i.active" >
+              <option value="true"> Activo</option>
+              <option value="false">Cerrado</option>
+            </select>
+          </td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="i.edit =!i.edit" *ngIf="!i.edit">
+              <i class="fas fa-edit"></i> Editar
+            </button>
+            <button class="btn btn-success btn-sm" *ngIf="i.edit" (click)="editCenter(i)" >
+              <i class="fas fa-save"></i> Guardar
+            </button>
+            <button class="btn btn-secondary btn-sm" (click)="i.edit =!i.edit" *ngIf="i.edit">
+                <i class="fas fa-ban"></i> Cancelar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Fin Centro de servicio -->
+
+<br>
+<!-- Usuarios -->
+<div class="card bg-light">
+  <div class="card-body">
+    <h5 class="card-title">
+      Usuarios
+      
+      <span class="float-right">
+        <button type="button" class="btn btn-sm btn-outline-dark " (click)="viewUserForm =!viewUserForm" *ngIf="!seeMoreUser" >Agregar Usuario</button>
+        <button class="btn btn-outline-primary btn-sm" (click)="seeMoreUser=!seeMoreUser" >Más Información</button>
+      </span>
+    </h5>
+    <div class="row" *ngIf="viewUserForm">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Nombre</label>
+          <input type="text" class="form-control-sm form-control" [(ngModel)]="user.name">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Apellido</label>
+          <input type="text" class="form-control-sm form-control" [(ngModel)]="user.last_name" >
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Email</label>
+          <input type="email" class="form-control form-control-sm" [(ngModel)]="user.email">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Tipo Usuario</label>
+          <select name="" id="" class="form-control form-control-sm" [(ngModel)]="typeUser">
+            <option value="service_center">Centro de Servicio</option>
+            <option value="account_customer">Administrador Cuenta</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="viewUserForm">
+      <div class="col">
+        <div class="form-group">
+          <label for="">Password</label>
+          <input type="password" class="form-control form-control-sm" [(ngModel)]="user.password" >
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label for="">Repeat Password</label>
+          <input type="password" class="form-control form-control-sm" [(ngModel)]="user.repeat_password" >
+        </div>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+    </div>
+    <div class="row" *ngIf="viewUserForm">
+      <div class="col-sm-12">
+        <p><strong>Este usuario podrá acceder a:</strong></p>
+      </div>
+      <div class="col-sm-3" *ngFor="let i of centers">
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="i.select">
+          <label class="form-check-label" for="exampleCheck1">{{i.name}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="viewUserForm">
+      <div class="col">
+          <button class="btn-primary btn btn-sm" (click)="saveUser()" >Guardar Usuario</button>
+      </div>
+    </div>
+    <br *ngIf="viewUserForm">
+
+    <table class="table table-sm" *ngIf="!seeMoreUser">
+      <thead class="thead-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Estatus</th>
+          <th *ngIf="seeHeadersUsers">Password</th>
+          <th *ngIf="seeHeadersUsers">R. Password</th>
+
+          <th>
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of users">
+          <td>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="i.name" [disabled]="!i.seeEdit">
+          </td>
+          <td>
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="i.last_name" [disabled]="!i.seeEdit">
+          </td>
+          <td>
+              <input type="email" class="form-control form-control-sm" [(ngModel)]="i.email" [disabled]="!i.seeEdit">
+          </td>
+          <td>
+              <select type="text" class="form-control form-control-sm" [(ngModel)]="i.role" [disabled]="!i.seeEdit">
+                  <option value="service_center">Centro de Servicio</option>
+                  <option value="account_customer">Administrador Cuenta</option>
+              </select>
+          </td>
+
+          <td *ngIf="!i.seeEdit"> 
+              <i [ngClass]="{'fas':true, 'fa-power-off':true, 'text-success':i.active, 'text-danger':!i.active}"></i>
+              <span *ngIf="i.active"> Activo</span>
+              <span *ngIf="!i.active"> Inactivo</span>
+            </td>
+            <td *ngIf="i.seeEdit">
+              <select class="form-control form-control-sm" [(ngModel)]="i.active" >
+                <option value="true"> Activo</option>
+                <option value="false">Inactivo</option>
+              </select>
+            </td>
+
+
+
+
+          <td *ngIf="seeHeadersUsers">
+              <input type="password" class="form-control form-control-sm" [(ngModel)]="i.newPass" *ngIf="i.seeEdit" placeholder="Password">
+          </td>
+          <td *ngIf="seeHeadersUsers">
+              <input type="password" class="form-control form-control-sm" [(ngModel)]="i.repeat_newPass" *ngIf="i.seeEdit" placeholder="Repeat Password">
+          </td>
+          <td>
+            <button class="btn-primary btn btn-sm" (click)="i.seeEdit=!i.seeEdit; seeHeadersUsers=!seeHeadersUsers" *ngIf="!i.seeEdit">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-secondary btn btn-sm" (click)="i.seeEdit=!i.seeEdit; seeHeadersUsers=!seeHeadersUsers" *ngIf="i.seeEdit" >
+              <i class="fas fa-ban"></i> 
+            </button>
+            <button class="btn-info btn btn-sm" ngbTooltip="Centros de Servicio" (click)="open(content, i)" >
+              <i class="fas fa-home"></i>
+            </button>
+            <button class="btn btn-sm btn-success" (click)="updateUser(i)" *ngIf="i.seeEdit">
+              <i class="fas fa-save"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<!-- Modal presenta Centros de Servicio asignado a un usuario -->
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title text-capitalize" id="modal-basic-title">Editar usuario</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>Centros de Servicio</p>
+      <hr>
+      <div class="row">
+        <div class="col-sm-3" *ngFor="let i of centers">
+            <div class="form-group form-check">
+              <input type="checkbox" class="form-check-input" [(ngModel)]="i.select">
+              <label class="form-check-label" for="exampleCheck1"> <span>[{{i.code}}]</span> <small>{{i.name}}</small></label>
+            </div>
+          </div>
+      </div>
+      <p>Los centros marcados son a los que este usuario tiene permiso de acceder y generar registros, siempre y cuando el Rol del usuario sea el de Centro de Servicio</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="c('Save click'); updateUser(userSelect)">Guardar Cambios</button>
+    </div>
+  </ng-template>
